@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Web Search</h1>
+    <input class="form-control" id="search-terms" data-bind="value: searchTerms">
+    <button type="button" id="btn-search" class="form-control btn-primary mt-3" data-bind="click: search">Search</button>
+
+    <div class="mt-5" data-bind="visible: timeUsed() != null">
+        <small>Time used: <span data-bind="text: timeUsed"></span> </small>
+    </div>
+
+    <ul data-bind="foreach: results">
+        <li>
+            <p> Path - <span data-bind="text: Path"></span></p>
+            <small>Number of occurences - <span data-bind="text: NumberOfOccurences"></span>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  load-balancer:
+    build:
+        context: .
+        dockerfile: "LoadBalancer/Dockerfile"
+    ports:
+      - 9000:80
+  saerch-api:
+    build:
+      context: .
+      dockerfile: "SearchAPI/Dockerfile"
+    depends_on:
+      - load-balancer
+    volumes:
+      - C:/Users/SamuelBartek/Desktop/loadBalancer:/data
+    deploy:
+      replicas: 3
+  web:
+    build:
+      context: .
+      dockerfile: "WebSearch/Dockerfile"
+    ports:
+      - 9001:80
+    depends_on:
+          - load-balancer
