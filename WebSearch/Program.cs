@@ -1,4 +1,9 @@
-var  MyAllowAnyOrigins = "_MyAllowAnyOrigins";
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.AspNetCore.Authentication;
+using WebSearch.Services;
+
+var MyAllowAnyOrigins = "_MyAllowAnyOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +13,21 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowAnyOrigins,
-                      policy  =>
+                      policy =>
                       {
                           policy.AllowAnyOrigin();
                       });
 });
 
+builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+        // options => builder.Configuration.Bind("CookieSettings", options));
+        options =>
+        {
+            options.LoginPath = "/login";
+        });
 
 var app = builder.Build();
 
@@ -34,7 +48,7 @@ app.UseRouting();
 // app.UseCors(options => options.AllowAnyOrigin());
 app.UseCors(MyAllowAnyOrigins);
 
-
+app.UseAuthentication(); // Add this line
 app.UseAuthorization();
 
 app.MapControllerRoute(
