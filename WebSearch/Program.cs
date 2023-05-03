@@ -1,3 +1,5 @@
+using Prometheus;
+
 var  MyAllowAnyOrigins = "_MyAllowAnyOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,19 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseHttpMetrics();
+
+app.UseEndpoints( endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapMetrics();
+
+    // endpoints.MapGet("/", async context =>
+    // {
+    //     await context.Response.WriteAsync("Hello");
+    // });
+});
 
 // app.UseCors(options => options.AllowAnyOrigin());
 app.UseCors(MyAllowAnyOrigins);

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Prometheus;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,9 +39,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseHttpMetrics();
+
 app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseEndpoints( endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapMetrics();
+
+    // endpoints.MapGet("/", async context =>
+    // {
+    //     await context.Response.WriteAsync("Hello");
+    // });
+});
 
 app.Run();

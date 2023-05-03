@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore;
+using Prometheus;
 
 var  MyAllowAnyOrigins = "_MyAllowAnyOrigins";
 
@@ -38,6 +39,7 @@ var app = builder.Build();
     app.UseSwaggerUI();
 }
 
+
 app.UseCors(options => options.AllowAnyOrigin());
 app.UseHttpsRedirection();
 
@@ -45,5 +47,6 @@ app.UseCors(MyAllowAnyOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
