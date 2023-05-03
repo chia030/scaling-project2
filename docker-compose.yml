@@ -7,14 +7,14 @@ services:
         dockerfile: "LoadBalancer/Dockerfile"
     ports:
       - 9000:80
-  saerch-api:
+  search-api:
     build:
       context: .
       dockerfile: "SearchAPI/Dockerfile"
     depends_on:
       - load-balancer
     volumes:
-      - C:/Users/SamuelBartek/Desktop/loadBalancer:/data
+      - C:/Users/CVI/source/repos/scaling-project/lb-data:/data
     deploy:
       replicas: 3
   web:
@@ -23,5 +23,13 @@ services:
       dockerfile: "WebSearch/Dockerfile"
     ports:
       - 9001:80
+    depends_on:
+          - load-balancer
+  auth:
+    build:
+      context: .
+      dockerfile: "JWTLoginAuthenticationAuthorization/Dockerfile"
+    ports:
+      - 28747:80
     depends_on:
           - load-balancer
