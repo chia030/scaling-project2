@@ -10,9 +10,9 @@ public class AuthorizationController : Controller
 {
     private readonly IAuthenticateService _authenticateService;
 
-    public AuthorizationController(IAuthenticateService authenticationService)
+    public AuthorizationController(IAuthenticateService authenticateService)
     {
-        _authenticateService = authenticationService;
+        _authenticateService = authenticateService;
     }
 
     public IActionResult Login()

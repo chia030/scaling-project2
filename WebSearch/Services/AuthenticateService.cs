@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using RestSharp;
 using JWTLoginAuthenticationAuthorization.Models;
 
+namespace WebSearch.Services
+{
 public class AuthenticateService : IAuthenticateService
 {
     //public async Task<bool> AuthenticateAsync(string username, string password)
@@ -50,4 +52,5 @@ public class AuthenticateService : IAuthenticateService
         return (isAuthenticated, token);
     }
 
+}
 }
