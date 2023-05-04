@@ -20,40 +20,11 @@ public class AuthorizationController : Controller
         return View();
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> Login(LoginViewModel model)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        bool isAuthenticated = await _authenticateService.AuthenticateAsync(model.Username, model.Password);
-
-    //        if (isAuthenticated)
-    //        {
-    //            Generate JWT token and store it in the authentication cookie.
-    //           var token = "..."; // your JWT token here
-    //            var authProperties = new AuthenticationProperties
-    //            {
-    //                IsPersistent = true
-    //            };
-
-    //            await HttpContext.SignInAsync("AuthenticationScheme", new ClaimsPrincipal(), authProperties);
-
-    //            return RedirectToAction("Index", "Home");
-    //        }
-    //        else
-    //        {
-    //            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-    //        }
-    //    }
-
-    //    return View(model);
-    //}
-
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
-        if (ModelState.IsValid)
-        {
+        //if (ModelState.IsValid)
+        //{
             // Assign the result of AuthenticateAsync to a variable
             var authenticationResult = await _authenticateService.AuthenticateAsync(model.Username, model.Password);
 
@@ -70,11 +41,11 @@ public class AuthorizationController : Controller
 
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            }
+        else
+        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         }
+    //}
 
         return View(model);
     }
