@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using JWTLoginAuthenticationAuthorization.Models;
+using System.Reflection;
 
 namespace WebSearch.Services
 {
@@ -45,9 +46,10 @@ public class AuthenticateService : IAuthenticateService
         // Check if the response is okay and contains a token
         if (response.StatusCode == System.Net.HttpStatusCode.OK && response.Content.Contains("token"))
         {
+            Console.WriteLine(response);
             isAuthenticated = true;
-            token = JsonConvert.DeserializeObject<dynamic>(response.Content)["token"];
-        }
+                token = JsonConvert.DeserializeObject<dynamic>(response.Content)["token"];
+            }
 
         return (isAuthenticated, token);
     }

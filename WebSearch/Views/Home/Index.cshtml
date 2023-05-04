@@ -5,6 +5,7 @@
 <div class="text-center">
     <h1 class="display-4">Web Search</h1>
     <input class="form-control" id="search-terms" data-bind="value: searchTerms">
+    <input id="CheckBox2" type="checkbox" name="CheckBox2" /><label for="CheckBox2">Use Authentication. Login <a asp-area="" asp-controller="Authorization" asp-action="Login">Here</a> </label>
     <button type="button" id="btn-search" class="form-control btn-primary mt-3" data-bind="click: search">Search</button>
 
     <div class="mt-5" data-bind="visible: timeUsed() != null">
