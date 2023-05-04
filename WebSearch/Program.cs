@@ -1,6 +1,12 @@
 using Prometheus;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+//using Microsoft.AspNetCore.Authentication;
+using WebSearch.Services;
 
-var  MyAllowAnyOrigins = "_MyAllowAnyOrigins";
+var MyAllowAnyOrigins = "_MyAllowAnyOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +16,26 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowAnyOrigins,
-                      policy  =>
+                      policy =>
                       {
                           policy.AllowAnyOrigin();
                       });
+});
+
+builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.LoginPath = "/login";
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.Redirect("/login");
+        return Task.CompletedTask;
+    };
 });
 
 
@@ -45,11 +67,11 @@ app.UseEndpoints( endpoints =>
 // app.UseCors(options => options.AllowAnyOrigin());
 app.UseCors(MyAllowAnyOrigins);
 
-
-// app.UseAuthorization();
+app.UseAuthentication(); // Add this line
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Authorization}/{action=Login}/{id?}");
 
 app.Run();
