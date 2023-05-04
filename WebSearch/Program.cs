@@ -1,3 +1,4 @@
+using Prometheus;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -53,6 +54,15 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseHttpMetrics();
+
+app.UseEndpoints( endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapMetrics();
+
+});
 
 // app.UseCors(options => options.AllowAnyOrigin());
 app.UseCors(MyAllowAnyOrigins);

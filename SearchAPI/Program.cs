@@ -1,3 +1,4 @@
+using Prometheus;
 using RestSharp;
 
 
@@ -44,6 +45,9 @@ var app = builder.Build();
     app.UseSwaggerUI();
 }
 
+app.UseHttpMetrics();
+
+
 // app.UseHttpsRedirection();
 
 //app.UseCors(config => config.AllowAnyOrigin());
@@ -51,5 +55,18 @@ app.UseCors(MyAllowAnyOrigins);
 // app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRouting();
+
+app.UseEndpoints( endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapMetrics();
+
+    // endpoints.MapGet("/", async context =>
+    // {
+    //     await context.Response.WriteAsync("Hello");
+    // });
+});
 
 app.Run();
