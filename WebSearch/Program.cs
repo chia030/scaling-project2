@@ -40,10 +40,6 @@ app.UseEndpoints( endpoints =>
     endpoints.MapControllers();
     endpoints.MapMetrics();
 
-    // endpoints.MapGet("/", async context =>
-    // {
-    //     await context.Response.WriteAsync("Hello");
-    // });
 });
 
 // app.UseCors(options => options.AllowAnyOrigin());

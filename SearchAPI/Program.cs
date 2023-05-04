@@ -56,6 +56,8 @@ app.UseCors(MyAllowAnyOrigins);
 
 app.MapControllers();
 
+app.UseRouting();
+
 app.UseEndpoints( endpoints =>
 {
     endpoints.MapControllers();
